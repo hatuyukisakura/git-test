@@ -5,5 +5,6 @@ public class test {
         System.out.println("hello github");
         int i = 3;
         System.out.println(++i);
+        System.out.println("hello minamikotori cyan");
     }
 }

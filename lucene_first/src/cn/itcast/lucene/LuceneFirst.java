@@ -20,6 +20,7 @@ import java.util.stream.Stream;
 public class LuceneFirst {
     @Test
     public void createIndex() throws IOException {
+        int a = 1;
         // 1、创建一个Director对象，指定索引库的位置
         // 1.1 把索引库保存在内存中,不安全,一般不用
         // Directory directory = new RAMDirectory();
@@ -31,35 +32,37 @@ public class LuceneFirst {
         File dir = new File("D:\\BaiduNetdiskDownload\\12-lucene\\02.参考资料\\searchsource");
         // 获取目录下的文件
         File[] files = dir.listFiles();
-        for (File file : files) {
-            // 3.1 获取文件名
-            String fileName = file.getName();
-            // 3.2 获取文件的路径
-            String filePath = file.getPath();
-            // 3.3 获取文件的内容
-            String fileContent = FileUtils.readFileToString(file, "utf-8");
-            // 3.4 获取文件的大小
-            long fileSize = FileUtils.sizeOf(file);
-            // 3.5 创建Field
-            // 3.5.1 参数1:域的名称,参数1:域的内容,参数3:是否存储
-            Field fieldName = new TextField("name", fileName, Field.Store.YES);
-            // Field fieldPath = new TextField("path", filePath, Field.Store.YES);
-            Field fieldPath = new StoredField("path", filePath);
-            Field fieldContent = new TextField("content", fileContent, Field.Store.YES);
-            // Field fieldSize = new TextField("size", fileSize + "", Field.Store.YES);
-            Field fieldSizeStore = new StoredField("size", fileSize + "");
-            Field fieldSizeValue = new LongPoint("size", fileSize);
-            // 4、创建文档对象
-            Document document = new Document();
-            // 4.1 向文档对象中添加域
-            document.add(fieldName);
-            document.add(fieldPath);
-            document.add(fieldContent);
-            document.add(fieldSizeStore);
-            // document.add(fieldSize);
-            document.add(fieldSizeValue);
-            // 5、将文档对象写入索引库
-            writer.addDocument(document);
+        if (files != null) {
+            for (File file : files) {
+                // 3.1 获取文件名
+                String fileName = file.getName();
+                // 3.2 获取文件的路径
+                String filePath = file.getPath();
+                // 3.3 获取文件的内容
+                String fileContent = FileUtils.readFileToString(file, "utf-8");
+                // 3.4 获取文件的大小
+                long fileSize = FileUtils.sizeOf(file);
+                // 3.5 创建Field
+                // 3.5.1 参数1:域的名称,参数1:域的内容,参数3:是否存储
+                Field fieldName = new TextField("name", fileName, Field.Store.YES);
+                // Field fieldPath = new TextField("path", filePath, Field.Store.YES);
+                Field fieldPath = new StoredField("path", filePath);
+                Field fieldContent = new TextField("content", fileContent, Field.Store.YES);
+                // Field fieldSize = new TextField("size", fileSize + "", Field.Store.YES);
+                Field fieldSizeStore = new StoredField("size", fileSize + "");
+                Field fieldSizeValue = new LongPoint("size", fileSize);
+                // 4、创建文档对象
+                Document document = new Document();
+                // 4.1 向文档对象中添加域
+                document.add(fieldName);
+                document.add(fieldPath);
+                document.add(fieldContent);
+                document.add(fieldSizeStore);
+                // document.add(fieldSize);
+                document.add(fieldSizeValue);
+                // 5、将文档对象写入索引库
+                writer.addDocument(document);
+            }
         }
         // 6、关闭IndexWriter对象
         writer.close();

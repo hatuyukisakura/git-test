@@ -20,7 +20,6 @@ import java.util.stream.Stream;
 public class LuceneFirst {
     @Test
     public void createIndex() throws IOException {
-        int a = 1;
         // 1、创建一个Director对象，指定索引库的位置
         // 1.1 把索引库保存在内存中,不安全,一般不用
         // Directory directory = new RAMDirectory();
